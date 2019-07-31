@@ -1,4 +1,4 @@
-# **Ethereum Supply Chain**
+# **Ethereum Pharmaceutical Supply Chain**
 
 The goals of this project are as follows:
 
