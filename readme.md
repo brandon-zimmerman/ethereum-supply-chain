@@ -29,7 +29,6 @@ The Supply Chain smart contract ([SupplyChain.sol](contracts/SupplyChain.sol)) i
 UML diagrams describing the contracts and their interactions are listed below.
 
 - [State Diagram](images/State-Diagram.png)
-  ![State Diagram](images/state-diagram.png)
 - [Activity Diagram](images/Activity-Diagram.png)
 - [Sequence Diagram](images/Sequence-Diagram.png)
 - [Class Diagram](images/Class-Diagram.png)
