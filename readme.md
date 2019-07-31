@@ -93,7 +93,7 @@ truffle migrate --network rinkeby
 
 ### Web Front-End
 
-The project includes an HTML test client ([image.html)](src/index.html) that interacts with the contract on the Ethereum RINKEBY test network.  The front-end uses the [Web3 Ethereum JavaScript API](https://web3js.readthedocs.io/en/1.0/) to create and retrieve star tokens on RINKEBY test through the [MetaMask](https://metamask.io/) browser plug-in.  
+The project includes an HTML test client ([index.html)](src/index.html) that interacts with the contract on the Ethereum RINKEBY test network.  The front-end uses the [Web3 Ethereum JavaScript API](https://web3js.readthedocs.io/en/1.0/) to create and retrieve star tokens on RINKEBY test through the [MetaMask](https://metamask.io/) browser plug-in.  
 
 Here is a screen shot of the Star Notary tab.
 
