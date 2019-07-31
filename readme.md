@@ -4,7 +4,7 @@ The goals of this project are as follows:
 
 - Plan the project with write-ups.
 - Write smart contracts.
-- ![]()Test smart contract code coverage
+- Test smart contract code coverage
 - Deploy smart contract on public test network.
 - Create web client to interact with smart contract
 
@@ -41,7 +41,7 @@ The Supply Chain contract includes a `struct` named `Item` ([SupplyChain.sol](co
 
 ### Smart Contract Unit Tests
 
-Unit tests are located within [StarNotaryTest.js](test/TestSupplychain.js).  They are implemented in JavaScript using the [Truffle](https://truffleframework.com/) framework.  The tests can be run by starting [Ganache](https://truffleframework.com/ganache) and executing the following commands (from a Windows Command prompt) from the main project folder.
+Unit tests are located within [TestSupplychain.js](test/TestSupplychain.js).  They are implemented in JavaScript using the [Truffle](https://truffleframework.com/) framework.  The tests can be run by starting [Ganache](https://truffleframework.com/ganache) and executing the following commands (from a Windows Command prompt) from the main project folder.
 
 ```bash
 C:\truffle.cmd develop
