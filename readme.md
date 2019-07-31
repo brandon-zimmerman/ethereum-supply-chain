@@ -24,6 +24,15 @@ This project is a Distributed Application (DApp) which includes an [Ethereum](ht
 
 The Supply Chain smart contract ([SupplyChain.sol](contracts/SupplyChain.sol)) is implemented using Solidity.  The contract inherits from a contract that provide ownership ([Ownable.sol](contracts/pharmaceuticalcore/Ownable.sol)) functions.  And contracts based on the Role contract ([Roles.sol](contracts/pharmaceuticalaccesscontrol/Roles.sol)) that implement role-specific functions ([ManufacturerRole.sol](contracts/pharmaceuticalaccesscontrol/ManufacturerRole.sol), [DistributorRole.sol](contracts/pharmaceuticalaccesscontrol/DistributorRole.sol), [RetailerRole.sol](contracts/pharmaceuticalaccesscontrol/RetailerRole.sol), and [ConsumerRole.sol](contracts/pharmaceuticalaccesscontrol/ConsumerRole.sol)).
 
+##### UML Diagrams
+
+UML diagrams describing the contracts and their interactions are listed below.
+
+- [State Diagram](images/State-Diagram.png)
+- [Activity Diagram](images/Activity-Diagram.png)
+- [Sequence Diagram](images/Sequence-Diagram.png)
+- [Class Diagram](images/Class-Diagram.png)
+
 ##### Item Struct
 
 The Supply Chain contract includes a `struct` named `Item` ([SupplyChain.sol](contracts/pharmaceuticalbase/SupplyChain.sol) lines -38-54) which holds item information including the current owner, manufacturer, distributor, retailer, and consumer information.)
