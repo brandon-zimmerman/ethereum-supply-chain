@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmaceutical Supply Chain</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Pharmaceutical Supply Chain</h1>
+        <hr>
+        <p style="text-align: center;">Prove the authenticity of medicine using the Ethereum blockchain.</p>
+    </div>
+
+    <div id="ftc-manufacture">
+        <h2>Product Overview</h2>
+        <div class="form-group">
+            SKU
+            <br>
+            <input class="input-field" type="number" id="sku" name="sku" value=1><br>
+            UPC
+            <br>
+            <input type="number" id="upc" name="upc" value=1><br>
+            Current Owner ID
+            <br>
+            <input type="text" id="ownerID" name="ownerID" value="0x39Ead481F27f375F8e286ccbB80f88b940Fd1Ce2" size="50"><br>
+            <div class=button-div>
+                <button class="btn-fetchOne" id="button" type="button" data-id="13">Fetch Data 1</button>
+                <button class="btn-fetchTwo" id="button" type="button" data-id="14">Fetch Data 2</button>
+            </div>
+        </div>
+        <div class=form-break></div>
+        <h2>Manufacturer Details</h2>
+        <div class="form-group">
+            Manufacturer ID
+            <br>
+            <input type="text" id="originManufacturerID" name="originManufacturerID" value="0x078A5349CaD9481b6ec38cA18ca87EBDB56f47f9"
+                size="50">
+                <button class="btn-add-manufacturer" id="button" type="button" data-id="15">Add Manufacturer</button>
+                <br>
+                
+                Manufacturer Name
+            <br>
+            <input type="text" id="originManufacturerName" name="originManufacturerName" value="ABC Pharmaceutical"><br>
+            Manufacturer Information
+            <br>
+            <input type="text" id="originManufacturerInformation" name="originManufacturerInformation" value="Austin, TX"><br>
+            Manufacturer Latitude
+            <br>
+            <input type="text" id="originManufacturerLatitude" name="originManufacturerLatitude" value="-30.3079827"><br>
+            Manufacturer Longitude
+            <br>
+            <input type="text" id="originManufacturerLongitude" name="originManufacturerLongitude" value="-97.893485"><br>
+            <br>
+            <table>
+                <tr>
+                    <td><button class="btn-manufacturer-manufacture" id="button" type="button" data-id="1"  style="width:100%">1. Manufacturer Manufacture</button></td>
+                    <td><button class="btn-manufacturer-package" id="button" type="button" data-id="2"  style="width:100%">2. Manufacturer Package</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn-manufacturer-sell" id="button" type="button" data-id="3"  style="width:100%">3. Manufacturer Sell</button>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+            
+            
+            
+        </div>
+        <div class=form-break></div>
+        <h2>Pharmaceutical Details</h2>
+        <div class="form-group">
+            Pharmaceutical Notes
+            <br>
+            <input type="text" id="productNotes" name="productNotes" value="Acetylsalicylic Acid" size="60"><br>
+            Pharmaceutical Price
+            <br>
+            <input type="number" id="productPrice" name="productPrice" value=".0001">ETH<br>
+            Distributor ID
+            <br>
+            <input type="text" id="distributorID" name="distributorID" value="0xE1dBB0D45CDCf7F43B5938f5FE86f9A063c8e3Ac"
+                size="50">
+                <button class="btn-add-distributor" id="button" type="button" data-id="16">Add Distributor</button>
+            <br>
+            Retailer ID
+            <br>
+            <input type="text" id="retailerID" name="retailerID" value="0xbE7F67f36fB174Eb33B5E0B423cfd0E0997F117C"
+                size="50">
+                <button class="btn-add-retailer" id="button" type="button" data-id="17">Add Retailer</button>
+                <br>
+            Consumer ID
+            <br>
+            <input type="text" id="consumerID" name="consumerID" value="0xDb12f3706f0f4A53E2fC0D11DD37C839A3dbc883"
+                size="50">
+                <button class="btn-add-consumer" id="button" type="button" data-id="18">Add Consumer</button>
+                <br>                
+            <br>
+            <br>
+            <br>
+            <table>
+                <tr>
+                    <td><button class="btn-distributor-buy" id="button" type="button" data-id="4" style="width:100%">4. Distributor Buy</button></td>
+                    <td><button class="btn-manufacturer-ship" id="button" type="button" data-id="5" style="width:100%">5. Manufacturer Ship</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn-distributor-receive" id="button" type="button" data-id="6" style="width:100%">6. Distributor Receive</button></td>
+                    <td><button class="btn-disttributor-sell" id="button" type="button" data-id="7" style="width:100%">7. Distributor Sell</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn-retailer-buy" id="button" type="button" data-id="8" style="width:100%">8. Retailer Buy</button></td>
+                    <td><button class="btn-distributor-ship" id="button" type="button" data-id="9" style="width:100%">9. Distributor Ship</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn-retailer-receive" id="button" type="button" data-id="10" style="width:100%">10. Retailer Receive</button></td>
+                    <td><button class="btn-retailer-sell" id="button" type="button" data-id="11" style="width:100%">11. Retailer Sell</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn-consumer-buy" id="button" type="button" data-id="12" style="width:100%">12. Consumer Buy</button></td>                    
+                </tr>
+            </table>            
+        </div>
+        <div class=form-break></div>
+        <hr>
+    </div>
+
+    <h2>Transaction History<span id="ftc-history"></span></h2>
+    <div>
+        <ul id="ftc-events">
+            <!-- Events will appear here from app.js -->
+        </ul>
+        <br>
+        <hr>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="js/web3.min.js"></script> -->
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

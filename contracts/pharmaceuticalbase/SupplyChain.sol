@@ -152,7 +152,7 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
 
   // Define a modifier that checks if the msg.sender can receive the item
   modifier canReceive(uint _upc) {
-    require(canAccountReceiveItem(msg.sender, _upc), "the sender cannot receive the item");
+    require(canAccountReceiveItem(_upc), "the sender cannot receive the item");
     _;
   }
 
@@ -172,7 +172,7 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
   }
 
   // Define a function 'manufactureItem' that allows a manufacturer to mark an item 'Manufactured'
-  function manufactureItem(uint _upc, address _originManufacturerID, string _originManufacturerName, string _originManufacturerInformation,
+  function manufactureItem(uint _upc, string _originManufacturerName, string _originManufacturerInformation,
     string  _originManufacturerLatitude, string  _originManufacturerLongitude, string  _productNotes) public
     onlyManufacturer
     {
@@ -188,8 +188,8 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
     items[_upc] = Item(
           {sku: sku,
           upc: _upc,
-          ownerID: _originManufacturerID,
-          originManufacturerID: _originManufacturerID,
+          ownerID: msg.sender,
+          originManufacturerID: msg.sender,
           originManufacturerName: _originManufacturerName,
           originManufacturerInformation: _originManufacturerInformation,
           originManufacturerLatitude: _originManufacturerLatitude,
@@ -207,8 +207,6 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
   function packageItem(uint _upc) public
   // Call modifier to check if upc has passed previous supply chain stage
   canPackage(_upc)
-  // Call modifier to verify caller of this function
-  onlyOwner
   {
     // Update the appropriate fields
     items[_upc].itemState = State.Packaged;
@@ -218,10 +216,8 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
 
   // Define a function 'sellItem' that allows a manufacturer to mark an item 'ForSale'
   function sellItem(uint _upc, uint _price) public
-  // Call modifier to check if upc has passed previous supply chain stage
+  // Call modifier to check if upc has passed previous supply chain stage and verify caller of this function
   canSell(_upc)
-  // Call modifier to verify caller of this function
-  onlyOwner
   {
     // Update the appropriate fields
     items[_upc].itemState = State.ForSale;
@@ -246,7 +242,14 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
 
       // Update the appropriate fields - ownerID, distributorID, itemState
       items[_upc].ownerID = buyer;
-      items[_upc].distributorID = buyer;
+
+      if(items[_upc].distributorID == address(0))
+        items[_upc].distributorID = buyer;
+      else if(items[_upc].retailerID == address(0))
+        items[_upc].retailerID = buyer;
+      else if(items[_upc].consumerID == address(0))
+        items[_upc].consumerID = buyer;
+
       items[_upc].itemState = State.Sold;
 
       // Transfer money to manufacturer
@@ -271,14 +274,10 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
   // Define a function 'receiveItem' that allows the retailer to mark an item 'Received'
   // Use the above modifiers to check if the item is shipped
   function receiveItem(uint _upc) public
-    // Call modifier to check if upc has passed previous supply chain stage
     canReceive(_upc)
-    // Access Control List enforced by calling Smart Contract / DApp
-    onlyOwner
     {
     // Update the appropriate fields - ownerID, retailerID, itemState
       items[_upc].itemState = State.Received;
-      items[_upc].retailerID = msg.sender;
 
       // Emit the appropriate event
       emit Received(upc);
@@ -286,38 +285,46 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
 
   // Define a function that determines whether an account can ship the given item.
   function canAccountShipItem(address _account, uint _upc) public view returns (bool) {
-    return (isOwner() && isSold(_upc) && (isManufacturer(_account, _upc) || isDistributor(_account, _upc)));
+    return (isSold(_upc) &&
+    ((isManufacturer(_account, _upc) && items[_upc].ownerID == items[_upc].distributorID
+      || isDistributor(_account, _upc) && items[_upc].ownerID == items[_upc].retailerID)));
   }
 
   // Define a function that determines whether an account can package the given item.
   function canAccountPackageItem(address _account, uint _upc) public view returns (bool) {
-    return (isOwner() && isManufactured(_upc) && isManufacturer(_account, _upc));
+    return (isManufactured(_upc) && isManufacturer(_account, _upc));
   }
 
  // Define a function that determines whether an account can receive the given item.
-  function canAccountReceiveItem(address _account, uint _upc) public view returns (bool) {
-    return (isOwner() && isShipped(_upc));
+  function canAccountReceiveItem(uint _upc) public view returns (bool) {
+    return (isItemOwner(msg.sender, _upc) && isShipped(_upc));
   }
 
   // Define a function that determines whether an account can sell the given item.
   function canAccountSellItem(address _account, uint _upc) public view returns (bool) {
-    return (isOwner() &&
+    return (isItemOwner(_account, _upc) &&
         ((isManufacturer(_account, _upc) && isPackaged(_upc)) ||
-        (isDistributor(_account, _upc) && isReceived(_upc))));
+        (isDistributor(_account, _upc) && isReceived(_upc)) ||
+        (isRetailer(_account, _upc) && isReceived(_upc))));
   }
 
   // Define a function that determines whether an account can sell the given item.
   function canAccountBuyItem(address _account, uint _upc) public view returns (bool) {
-    return (isForSale(_upc)
-      && ((isDistributor(_account)
-            && items[_upc].distributorID == address(0))
-       || (isRetailer(account)
-            && items[_upc].distributorID != address(0)
-            && items[_upc].retailerID == address(0))
-       || (isConsumer(account)
-            && items[_upc].distributorID != address(0)
-            && items[_upc].retailerID != address(0)
-            && items[_upc].consumerID == address(0))));
+    return (isForSale(_upc) &&
+      ((isDistributor(_account) &&
+        items[_upc].distributorID == address(0)) ||
+          (isRetailer(_account) &&
+            items[_upc].distributorID != address(0) &&
+            items[_upc].retailerID == address(0)) ||
+          (isConsumer(_account) &&
+           items[_upc].distributorID != address(0) &&
+           items[_upc].retailerID != address(0) &&
+           items[_upc].consumerID == address(0))));
+  }
+
+  // Define a function that determines whether the item is packaged.
+  function isItemOwner(address _account, uint _upc) public view returns (bool) {
+    return (items[_upc].ownerID == _account);
   }
 
   // Define a function that determines whether the item is packaged.
@@ -352,7 +359,7 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
 
   // Define a function that determines whether the given account manufactured the
   // given item.
-  function isItemManufacturer(address _account, uint _upc) internal view returns (bool) {
+  function isManufacturer(address _account, uint _upc) internal view returns (bool) {
     return (isManufacturer(_account) && _account == items[_upc].originManufacturerID);
   }
 
@@ -361,6 +368,13 @@ contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, D
   function isDistributor(address _account, uint _upc) internal view returns (bool) {
     return (isDistributor(_account) && _account == items[_upc].distributorID);
   }
+
+  // Define a function that determines whether the given account is the retailer
+  // of the given item.
+  function isRetailer(address _account, uint _upc) internal view returns (bool) {
+    return (isRetailer(_account) && _account == items[_upc].retailerID);
+  }
+
 
   // Define a function 'fetchItemBufferOne' that fetches the data
   function fetchItemBufferOne(uint _upc) public view returns
