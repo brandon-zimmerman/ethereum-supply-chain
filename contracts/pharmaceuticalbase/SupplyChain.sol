@@ -3,7 +3,7 @@ import "../pharmaceuticalcore/Ownable.sol";
 import "../pharmaceuticalaccesscontrol/ConsumerRole.sol";
 import "../pharmaceuticalaccesscontrol/DistributorRole.sol";
 import "../pharmaceuticalaccesscontrol/ManufacturerRole.sol";
-import "../pharmaceuticalaccesscontrol/RetailerRole.sol";
+import "../pharmaceuticalaccesscontrol/RetailerRole.sol"; 
 
 // Define a contract 'Supplychain'
 contract SupplyChain is Ownable, ConsumerRole, ManufacturerRole, RetailerRole, DistributorRole {
