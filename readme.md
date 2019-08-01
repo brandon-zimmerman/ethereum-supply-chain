@@ -132,7 +132,7 @@ The following software must be installed on the host machine.
   npm install truffle -g
   ```
 
-- Install [MetaMax](https://metamask.io/)
+- Install [MetaMask](https://metamask.io/)
 
   Install the MetaMask [Chrome extension](https://metamask.io/).
 
