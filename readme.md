@@ -22,7 +22,7 @@ This project is a Distributed Application (DApp) which includes an [Ethereum](ht
 
 ### Supply Chain Smart Contract
 
-The Supply Chain smart contract ([SupplyChain.sol](contracts/SupplyChain.sol)) is implemented using Solidity.  The contract inherits from a contract that provide ownership ([Ownable.sol](contracts/pharmaceuticalcore/Ownable.sol)) functions.  And contracts based on the Role contract ([Roles.sol](contracts/pharmaceuticalaccesscontrol/Roles.sol)) that implement role-specific functions ([ManufacturerRole.sol](contracts/pharmaceuticalaccesscontrol/ManufacturerRole.sol), [DistributorRole.sol](contracts/pharmaceuticalaccesscontrol/DistributorRole.sol), [RetailerRole.sol](contracts/pharmaceuticalaccesscontrol/RetailerRole.sol), and [ConsumerRole.sol](contracts/pharmaceuticalaccesscontrol/ConsumerRole.sol)).
+The Supply Chain smart contract ([SupplyChain.sol](contracts/pharmaceuticalbase/SupplyChain.sol)) is implemented using Solidity.  The contract inherits from a contract that provide ownership ([Ownable.sol](contracts/pharmaceuticalcore/Ownable.sol)) functions.  And contracts based on the Role contract ([Roles.sol](contracts/pharmaceuticalaccesscontrol/Roles.sol)) that implement role-specific functions ([ManufacturerRole.sol](contracts/pharmaceuticalaccesscontrol/ManufacturerRole.sol), [DistributorRole.sol](contracts/pharmaceuticalaccesscontrol/DistributorRole.sol), [RetailerRole.sol](contracts/pharmaceuticalaccesscontrol/RetailerRole.sol), and [ConsumerRole.sol](contracts/pharmaceuticalaccesscontrol/ConsumerRole.sol)).
 
 ##### UML Diagrams
 
@@ -85,7 +85,7 @@ module.exports = {
 };
 ```
 
-The *rinkeby* network configuration tells Truffle to deploy the smart contracts to the RINKEBY test network through the [Infura](https://infura.io/) blockchain infrastructure.    The wallet mnemonic and RINKEBY API key values are retrieved from  [.env](smart_contracts/.env) file using the [dotenv](https://www.npmjs.com/package/dotenv) node.js module.
+The *rinkeby* network configuration tells Truffle to deploy the smart contracts to the RINKEBY test network through the [Infura](https://infura.io/) blockchain infrastructure.    The wallet mnemonic and RINKEBY API key values are retrieved from the .env file using the [dotenv](https://www.npmjs.com/package/dotenv) node.js module.
 
 Running the following commands will initiate the deployment to the RINKEBY test network.
 
